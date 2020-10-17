@@ -16,13 +16,12 @@ class MyCNNClassifier(nn.Module):
         self.encoder = nn.Sequential(
             conv_block(in_c, 32, kernel_size=3, padding=1, stride = 1),
             conv_block(32, 64, kernel_size=3, padding=1, stride = 1),
-            conv_block(64, 128, kernel_size = 3, padding = 1, stride = 2)
         )
 
 
         self.decoder = nn.Sequential(
-        #Output height = (Input height + padding height top + padding height bottom - kernel height) / (stride height) + 1
-            nn.Linear(128 * 14 * 14, 1024),
+        #Output height = (Input height + 2* padding - kernel height) / (stride height) + 1
+            nn.Linear(64 * 28 * 28, 1024),
             nn.ReLU(),
             nn.Linear(1024, n_classes)
         )
